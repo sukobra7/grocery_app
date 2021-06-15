@@ -1,8 +1,18 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:grocery_app/view_models/add_store_view_model.dart';
 
 class AddStorePage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  AddStoreViewModel _addStoreVM = AddStoreViewModel();
+
+  void _saveStore(BuildContext context) {
+    if(_formKey.currentState.validate()) {
+      _addStoreVM.saveStore();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +26,7 @@ class AddStorePage extends StatelessWidget {
             child: Column(
               children: [
                 TextFormField(
-                  onChanged: (value) { },
+                  onChanged: (value) => _addStoreVM.storeName = value,
                   validator: (value) {
                     if (value.isEmpty) {
                       return "Please enter store name";
@@ -26,7 +36,7 @@ class AddStorePage extends StatelessWidget {
                   decoration: InputDecoration(hintText: "Enter store name"),
                 ),
                 TextFormField(
-                  onChanged: (value) { },
+                  onChanged: (value) => _addStoreVM.storeAddress = value,
                   validator: (value) {
                     if (value.isEmpty) {
                       return "Please enter store address";
@@ -38,7 +48,7 @@ class AddStorePage extends StatelessWidget {
                 RaisedButton(
                     child: Text("Save", style: TextStyle(color: Colors.white)),
                     onPressed: () {
-
+                      _saveStore(context);
                     },
                     color: Colors.blue),
                 Spacer(),

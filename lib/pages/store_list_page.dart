@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:grocery_app/pages/add_store_page.dart';
 
 class StoreListPage extends StatefulWidget {
   @override
@@ -10,6 +11,11 @@ class _StoreListPage extends State<StoreListPage> {
 
   Widget _buildBody() {
     return Text("");
+  }
+
+  void _navigateToAddStorePage(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => AddStorePage(),
+    fullscreenDialog: true));
   }
 
   @override
@@ -23,7 +29,7 @@ class _StoreListPage extends State<StoreListPage> {
               child: GestureDetector(
                 child: Icon(Icons.add),
                 onTap: () {
-
+                  _navigateToAddStorePage(context);
                 },
               ),
             )
