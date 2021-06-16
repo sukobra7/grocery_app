@@ -12,6 +12,7 @@ class Store {
     return reference.id;
   }
 
+  // map型に変更
   Map<String, dynamic> toMap() {
     return {
       "name" : name,
