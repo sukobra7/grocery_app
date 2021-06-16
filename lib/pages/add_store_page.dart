@@ -8,9 +8,12 @@ class AddStorePage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   AddStoreViewModel _addStoreVM = AddStoreViewModel();
 
-  void _saveStore(BuildContext context) {
+  void _saveStore(BuildContext context) async {
     if(_formKey.currentState.validate()) {
-      _addStoreVM.saveStore();
+      final isSaved = await _addStoreVM.saveStore();
+      if(isSaved) {
+        Navigator.pop(context);
+      }
     }
   }
 
@@ -52,7 +55,7 @@ class AddStorePage extends StatelessWidget {
                     },
                     color: Colors.blue),
                 Spacer(),
-                Text("")
+                Text(_addStoreVM.message)
               ],
             ),
           ),
