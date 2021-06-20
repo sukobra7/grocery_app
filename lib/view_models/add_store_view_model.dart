@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:grocery_app/models/store.dart';
 
-class AddStoreViewModel {
+class AddStoreViewModel extends ChangeNotifier {
 
   // add_store_pageの画面が下記に該当
   String storeName = "";
@@ -22,12 +23,14 @@ class AddStoreViewModel {
       await FirebaseFirestore.instance.collection("stores")
       .add(store.toMap());
       isSaved = true;
+      notifyListeners();
     } on Exception catch(_) {
       message = "Unable to save the store";
     } catch(error) {
       message = "Error occured!";
     }
-
+    // ここでaddstorepageに変更を知らせる → addstorepageがそれをキャッチ
+    notifyListeners();
     return isSaved;
 
   }

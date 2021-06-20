@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:grocery_app/view_models/add_store_view_model.dart';
+import 'package:provider/provider.dart';
 
 class AddStorePage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  AddStoreViewModel _addStoreVM = AddStoreViewModel();
+  //
+  AddStoreViewModel _addStoreVM;
 
   void _saveStore(BuildContext context) async {
     if(_formKey.currentState.validate()) {
@@ -19,7 +21,7 @@ class AddStorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    _addStoreVM = Provider.of<AddStoreViewModel>(context);
     return Scaffold(
         appBar: AppBar(title: Text("Add Store")),
         body: Padding(

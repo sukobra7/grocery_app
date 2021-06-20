@@ -20,4 +20,7 @@ class Store {
     };
   }
 
+  factory Store.fromSnapshot(QueryDocumentSnapshot doc) {
+    return Store(doc["name"], doc["address"], doc.reference);
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:grocery_app/models/store.dart';
 
 class StoreViewModel {
@@ -18,4 +19,10 @@ class StoreViewModel {
     return store.address;
   }
 
+  factory StoreViewModel.fromSnapshot(QueryDocumentSnapshot doc) {
+
+    // storemodelはfromsnapshotを呼び出すfunctionがないので定義
+    final store = Store.fromSnapshot(doc);
+    return StoreViewModel(store: store);
+  }
 }
