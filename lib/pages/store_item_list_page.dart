@@ -1,13 +1,20 @@
 
 import 'package:flutter/material.dart';
+import 'package:grocery_app/view_models/store_view_model.dart';
 
 class StoreItemListPage extends StatelessWidget {
+
+  final StoreViewModel store;
 
   final _nameController = TextEditingController();
   final _priceController = TextEditingController();
   final _quantityController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  // storeにパスさせないと、
+  // どのアイテムがどの店に所属しているかがわからない
+  StoreItemListPage({this.store});
 
   String _validate(String value) {
     if(value.isEmpty) {
@@ -79,7 +86,7 @@ class StoreItemListPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-            title: Text("Store name"),
+            title: Text(store.name),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {

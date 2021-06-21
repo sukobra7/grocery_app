@@ -21,7 +21,7 @@ class StoreViewModel {
 
   factory StoreViewModel.fromSnapshot(QueryDocumentSnapshot doc) {
 
-    // storemodelはfromsnapshotを呼び出すfunctionがないので定義
+    // storemodelはfromsnapshotを呼び出すfunctionがないのでstoreモデルで定義
     final store = Store.fromSnapshot(doc);
     return StoreViewModel(store: store);
   }

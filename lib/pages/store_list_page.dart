@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/pages/add_store_page.dart';
+import 'package:grocery_app/pages/store_item_list_page.dart';
 import 'package:grocery_app/utils/constants.dart';
 import 'package:grocery_app/view_models/add_store_view_model.dart';
 import 'package:grocery_app/view_models/store_list_view_model.dart';
@@ -38,16 +39,27 @@ class _StoreListPage extends State<StoreListPage> {
       itemCount: stores.length,
       itemBuilder: (context, index) {
         final store = stores[index];
-        return _buildListItem(store);
+        return _buildListItem(store, (store) {
+          _navigationToStoreItems(context, store);
+        });
       }
     );
   }
 
-  Widget _buildListItem(StoreViewModel store) {
+  Widget _buildListItem(StoreViewModel store, void Function(StoreViewModel)
+  onStoreSelected ) {
     return ListTile(
       title: Text(store.name),
-      subtitle: Text(store.address)
+      subtitle: Text(store.address),
+      trailing: Icon(Icons.arrow_forward_ios),
+      onTap: () => onStoreSelected(store),
+        // 画面遷移(navigation)のため、contextをパスさせたい、必要
+        // 引数にfunctionで定義
     );
+  }
+
+  void _navigationToStoreItems(BuildContext context, StoreViewModel store) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => StoreItemListPage(store: store)));
   }
 
   void _navigateToAddStorePage(BuildContext context) {
