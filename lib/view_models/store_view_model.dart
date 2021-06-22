@@ -7,8 +7,8 @@ class StoreViewModel {
 
   StoreViewModel({this.store});
 
-  String get storeID {
-    return store.storeID;
+  String get storeId {
+    return store.storeId;
   }
 
   String get name {

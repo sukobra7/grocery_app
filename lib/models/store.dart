@@ -8,7 +8,7 @@ class Store {
 
   Store(this.name, this.address, [this.reference]);
 
-  String get storeID {
+  String get storeId {
     return reference.id;
   }
 
@@ -23,4 +23,6 @@ class Store {
   factory Store.fromSnapshot(QueryDocumentSnapshot doc) {
     return Store(doc["name"], doc["address"], doc.reference);
   }
+
+
 }
