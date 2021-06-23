@@ -5,15 +5,24 @@ import 'package:grocery_app/view_models/store_item_view_model.dart';
 class StoreItemsWidget extends StatelessWidget {
 
   final List<StoreItemViewModel> storeItems;
+  final Function(StoreItemViewModel) onStoreItemDeleted;
 
-  StoreItemsWidget({this.storeItems});
+
+  StoreItemsWidget({this.storeItems, this.onStoreItemDeleted});
 
   Widget _buildItems(BuildContext context, int index) {
 
     final storeItem = storeItems[index];
 
-    return ListTile(
-      title: Text(storeItem.name)
+    return Dismissible(
+      key: Key(storeItem.storeItemId),
+      onDismissed: (_) {
+        onStoreItemDeleted(storeItem);
+      },
+      background: Container(color: Colors.red),
+      child: ListTile(
+        title: Text(storeItem.name),
+      )
     );
   }
 
