@@ -18,6 +18,11 @@ class StoreViewModel {
   String get address {
     return store.address;
   }
+  
+  Future<int> get itemsCountAsync async {
+    final data = await store.reference.collection("items").get();
+    return data.docs.length;
+  }
 
   factory StoreViewModel.fromSnapshot(QueryDocumentSnapshot doc) {
 

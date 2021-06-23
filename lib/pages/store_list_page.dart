@@ -8,6 +8,7 @@ import 'package:grocery_app/view_models/add_store_view_model.dart';
 import 'package:grocery_app/view_models/store_list_view_model.dart';
 import 'package:grocery_app/view_models/store_view_model.dart';
 import 'package:grocery_app/widgets/empty_results_widget.dart';
+import 'package:grocery_app/widgets/item_count_widget.dart';
 import 'package:provider/provider.dart';
 
 class StoreListPage extends StatefulWidget {
@@ -17,6 +18,7 @@ class StoreListPage extends StatefulWidget {
 
 class _StoreListPage extends State<StoreListPage> {
 
+  bool _reloadData = false;
   StoreListViewModel _storeListVM = StoreListViewModel();
 
   Widget _buildBody() {
@@ -51,15 +53,31 @@ class _StoreListPage extends State<StoreListPage> {
     return ListTile(
       title: Text(store.name),
       subtitle: Text(store.address),
-      trailing: Icon(Icons.arrow_forward_ios),
+      trailing: FutureBuilder<int>(
+        future: store.itemsCountAsync,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ItemCountWidget(count: snapshot.data);
+          } else {
+            return SizedBox.shrink();
+          }
+        }
+      ),
       onTap: () => onStoreSelected(store),
         // 画面遷移(navigation)のため、contextをパスさせたい、必要
         // 引数にfunctionで定義
     );
   }
 
-  void _navigationToStoreItems(BuildContext context, StoreViewModel store) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => StoreItemListPage(store: store)));
+  void _navigationToStoreItems(BuildContext context, StoreViewModel store) async {
+    final bool refreshStores = await Navigator.push(context, MaterialPageRoute(builder: (context) => StoreItemListPage(store: store)));
+
+    if(refreshStores) {
+      setState(() {
+        _reloadData = true;
+      });
+    }
+
   }
 
   void _navigateToAddStorePage(BuildContext context) {
